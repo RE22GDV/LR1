@@ -12,3 +12,4 @@
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.pdb
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.genruntimeconfig.cache
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/ref/MyApp.dll
+/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.sourcelink.json

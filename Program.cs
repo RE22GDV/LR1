@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Program.cs
+using System.Globalization;
+using MyApp;
 
-using  Lec_IPZ_2_1;
+CultureInfo.DefaultThreadCurrentCulture = new("uk-UA");
 
-class Program
-{
-    static void Main(string[] args)
-    {
+var db = new WarehouseSystem();
+DataSeeder.Seed(db);      // або Persistence.Load(db)
 
-        TextMenu textMenu = new TextMenu();
-        textMenu.DisplayTextMenu();
-
-    }
-}
+new TextMenu(db).Show();

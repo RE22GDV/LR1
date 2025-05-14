@@ -1,68 +1,54 @@
-﻿using Lec_IPZ_2_1;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//$$$$$$
-namespace Lec_IPZ_2_1
+﻿// TextMenu.cs
+namespace MyApp;
+using MyApp;
+public class TextMenu
 {
-    internal class TextMenu
+    private readonly WarehouseSystem _db;
+    public TextMenu(WarehouseSystem db) => _db = db;
+
+    public void Show()
     {
-       
-
-        public void DisplayTextMenu()
+        while (true)
         {
-            while (true)
+            Console.WriteLine("""
+            ╔════════════════════════════╗
+            ║   М Е Н Ю   С К Л А Д У    ║
+            ╠════════════════════════════╣
+            ║ 1 – Співробітники          ║
+            ║ 2 – Товари                 ║
+            ║ 3 – Замовлення             ║
+            ║ 0 – Вихід                  ║
+            ╚════════════════════════════╝
+            """);
+            Console.Write("Ваш вибір: ");
+            if (!int.TryParse(Console.ReadLine(), out var cmd)) continue;
+            switch (cmd)
             {
-                Console.WriteLine("Take Choice");
-                Console.WriteLine("1. Choiсe");
-                Console.WriteLine("2. Choiсe");
-                Console.WriteLine("3. Choiсe");
-                Console.WriteLine("4. Exit");
-                Console.WriteLine("Select an option: ");
-                string? input = Console.ReadLine();
-                if (input == null)
-                {
-                    Console.WriteLine("Invalid input. Please try again.");
-                    continue;
-                }
-                string option = input;
-
-                switch (option)
-                {
-                    case "1":
-                        Choiсe1();
-                        break;
-                    case "2":
-                        Choiсe2();
-                        break;
-                    case "3":
-                        Choiсe3();
-                        break;
-                    case "4":
-                        return;
-                    default:
-                        Console.WriteLine("Invalid option. Please try again.");
-                        break;
-                }
+                case 1: ListAndDetails(_db.Employees);   break;
+                case 2: ListAndDetails(_db.Products);    break;
+                case 3: ListAndDetails(_db.Orders);      break;
+                case 0: return;
+                default: Console.WriteLine("Невірний пункт."); break;
             }
         }
+    }
 
-        static void Choiсe1()
-        {
-            Console.WriteLine("Choiсe1");
-        
-        }
+    // T повинен мати Id та ToString() для списку і Details() для повного опису
+    private static void ListAndDetails<T>(IEnumerable<T> items) where T : class
+    {
+        Console.Clear();
+        foreach (var x in items) Console.WriteLine(x);
+        Console.Write("\nID для докладно (Enter – назад): ");
+        var input = Console.ReadLine();
+        if (!int.TryParse(input, out var id)) return;
 
-        static void Choiсe2()
-        {
-                Console.WriteLine("Choiсe2");
-        }
-
-        static void Choiсe3()
-        {
-                Console.WriteLine("Choiсe3");
-        }
+        // віддзеркаленням викликаємо Details()
+        var item = items.FirstOrDefault(i => (int)i!.GetType().GetProperty("Id")!.GetValue(i)! == id);
+        if (item is null) { Console.WriteLine("Не знайдено."); return; }
+        var details = (string?)item.GetType().GetMethod("Details")?.Invoke(item, null);
+        Console.WriteLine("\n" + details);
+        Console.WriteLine("\nНатисніть будь-що, щоб повернутися…");
+        Console.ReadKey();
+        Console.Clear();
     }
 }
