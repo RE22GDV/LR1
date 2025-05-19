@@ -1,0 +1,32 @@
+﻿@page
+@model WebUI.Pages.Positions.IndexModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Посади";
+}
+
+<h2>Список посад</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Код</th>
+            <th>Назва</th>
+            <th>Оклад</th>
+            <th>Обов'язки</th>
+            <th>Вимоги</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model.Data)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Title</td>
+            <td>@p.Salary.ToString("C", new CultureInfo("uk-UA"))</td>
+            <td>@p.Duties</td>
+            <td>@p.Requirements</td>
+        </tr>
+    }
+    </tbody>
+</table>

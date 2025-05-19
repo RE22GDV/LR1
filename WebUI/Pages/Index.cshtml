@@ -1,0 +1,81 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Панель";
+}
+
+<h2 class="mb-3">Що вас цікавить?</h2>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Employees/Index">
+            <div class="card-body">
+                <h4>Працівники</h4>
+                <p class="text-muted">@Model.EmpCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Products/Index">
+            <div class="card-body">
+                <h4>Товари</h4>
+                <p class="text-muted">@Model.ProductCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Orders/Index">
+            <div class="card-body">
+                <h4>Замовлення</h4>
+                <p class="text-muted">@Model.OrderCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Positions/Index">
+            <div class="card-body">
+                <h4>Посади</h4>
+                <p class="text-muted">@Model.PositionCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/ProductTypes/Index">
+            <div class="card-body">
+                <h4>Види товару</h4>
+                <p class="text-muted">@Model.ProductTypeCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Customers/Index">
+            <div class="card-body">
+                <h4>Замовники</h4>
+                <p class="text-muted">@Model.CustomerCount записів</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Services/Index">
+            <div class="card-body">
+                <h4>Послуги</h4>
+                <p class="text-muted">@Model.ServiceCount записів</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<hr class="my-5" />
+
+<h2 class="mb-3">Аналітичні представлення</h2>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <a class="card text-center text-decoration-none shadow-sm" asp-page="/Queries/Index">
+            <div class="card-body">
+                <h4>Запити</h4>
+                <p class="text-muted">Відділ кадрів, Товари, Замовлення</p>
+            </div>
+        </a>
+    </div>
+</div>

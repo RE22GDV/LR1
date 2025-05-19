@@ -1,0 +1,46 @@
+﻿@page "{id:int}"
+@model WebUI.Pages.Orders.DetailsModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Деталі замовлення";
+    var o = Model.Item!;
+}
+
+<h2>Деталі замовлення №@o.Id</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Дата замовлення</dt>
+    <dd class="col-sm-9">@o.OrderDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</dd>
+
+    <dt class="col-sm-3">Дата виконання</dt>
+    <dd class="col-sm-9">@o.CompletionDate?.ToString("yyyy-MM-dd") ?? "—"</dd>
+
+    <dt class="col-sm-3">Код замовника</dt>
+    <dd class="col-sm-9">@o.CustomerId</dd>
+
+    <dt class="col-sm-3">Комплектуючі</dt>
+    <dd class="col-sm-9">@o.ProductId1, @o.ProductId2, @o.ProductId3</dd>
+
+    <dt class="col-sm-3">Передоплата</dt>
+    <dd class="col-sm-9">@o.PrepaymentShare.ToString("P0")</dd>
+
+    <dt class="col-sm-3">Оплата</dt>
+    <dd class="col-sm-9">@((o.Paid) ? "✅ Оплачено" : "🚫 Не оплачено")</dd>
+
+    <dt class="col-sm-3">Виконано</dt>
+    <dd class="col-sm-9">@((o.Completed) ? "✅ Так" : "⏳ Ні")</dd>
+
+    <dt class="col-sm-3">Загальна вартість</dt>
+    <dd class="col-sm-9">@o.TotalCost.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</dd>
+
+    <dt class="col-sm-3">Гарантія</dt>
+    <dd class="col-sm-9">@o.TotalWarrantyMonths міс.</dd>
+
+    <dt class="col-sm-3">Послуги</dt>
+    <dd class="col-sm-9">@o.ServiceId1, @o.ServiceId2, @o.ServiceId3</dd>
+
+    <dt class="col-sm-3">Код співробітника</dt>
+    <dd class="col-sm-9">@o.EmployeeId</dd>
+</dl>
+
+<a asp-page="./Index" class="btn btn-secondary">⬅ Назад</a>

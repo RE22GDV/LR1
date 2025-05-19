@@ -1,0 +1,24 @@
+﻿@page "{id:int}"
+@model WebUI.Pages.Employees.DetailsModel
+
+@{
+    ViewData["Title"]="Працівник";
+    var e = Model.Emp;
+}
+
+@if(e is null)
+{
+    <h4 class="text-danger">Не знайдено</h4>
+    return;
+}
+
+<h2>@e.FullName</h2>
+<ul class="list-group">
+    <li class="list-group-item">Вік: <b>@e.Age</b></li>
+    <li class="list-group-item">Стать: <b>@e.Gender</b></li>
+    <li class="list-group-item">Телефон: <b>@e.Phone</b></li>
+    <li class="list-group-item">Адреса: <b>@e.Address</b></li>
+    <li class="list-group-item">Паспорт: <b>@e.PassportInfo</b></li>
+    <li class="list-group-item">Код посади: <b>@e.PositionId</b></li>
+</ul>
+<a class="btn btn-link mt-3" asp-page="Index">← назад</a>

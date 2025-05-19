@@ -1,0 +1,36 @@
+﻿@page
+@model WebUI.Pages.Orders.IndexModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Замовлення";
+}
+
+<h2>Список замовлень</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата замовлення</th>
+            <th>Стан виконання</th>
+            <th>Оплата</th>
+            <th>Загальна вартість</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model.Data)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+            <td>@(order.Completed ? "✅ Виконано" : "⏳ Очікує")</td>
+            <td>@(order.Paid ? "💵 Оплачено" : "🚫 Не оплачено")</td>
+            <td>@order.TotalCost.ToString("C", new CultureInfo("uk-UA"))</td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary"
+                   asp-page="Details" asp-route-id="@order.Id">Деталі</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

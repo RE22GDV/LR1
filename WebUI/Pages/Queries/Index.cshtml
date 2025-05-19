@@ -1,0 +1,96 @@
+@page
+@model WebUI.Pages.Queries.IndexModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Аналітичні представлення";
+}
+
+<h2 class="mb-3">Фільтри</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Посада</label>
+        <select asp-for="PositionId" class="form-select" name="PositionId">
+            <option value="">Усі</option>
+            @foreach (var p in Model.Positions)
+            {
+                <option value="@p.Id">@p.Title</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Вид товару</label>
+        <select asp-for="ProductTypeId" class="form-select" name="ProductTypeId">
+            <option value="">Усі</option>
+            @foreach (var pt in Model.ProductTypes)
+            {
+                <option value="@pt.Id">@pt.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Замовник</label>
+        <select asp-for="CustomerId" class="form-select" name="CustomerId">
+            <option value="">Усі</option>
+            @foreach (var c in Model.Customers)
+            {
+                <option value="@c.Id">@c.FullName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Дата (від – до)</label>
+        <div class="d-flex gap-2">
+            <input asp-for="From" class="form-control" type="date" name="From" />
+            <input asp-for="To" class="form-control" type="date" name="To" />
+        </div>
+    </div>
+    <div class="col-12 d-flex gap-3">
+        <button class="btn btn-primary mt-2" type="submit">Застосувати фільтри</button>
+        <a href="/Queries/Index" class="btn btn-outline-secondary mt-2">Скинути фільтри</a>
+    </div>
+</form>
+
+<h2>Відділ кадрів</h2>
+<table class="table table-bordered">
+    <thead><tr><th>ПІБ</th><th>Вік</th><th>Посада</th><th>Оклад</th></tr></thead>
+    <tbody>
+    @foreach (var (e, p) in Model.HRDepartment)
+    {
+        <tr><td>@e.FullName</td><td>@e.Age</td><td>@p.Title</td><td>@p.Salary.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td></tr>
+    }
+    </tbody>
+</table>
+
+<h2>Список товарів</h2>
+<table class="table table-bordered">
+    <thead><tr><th>Назва</th><th>Тип</th><th>Ціна</th></tr></thead>
+    <tbody>
+    @foreach (var (prod, type) in Model.ProductList)
+    {
+        <tr><td>@prod.Name</td><td>@type.Name</td><td>@prod.Price.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td></tr>
+    }
+    </tbody>
+</table>
+
+<h2>Список замовлень</h2>
+<table class="table table-bordered">
+    <thead><tr><th>Дата</th><th>Клієнт</th><th>Співробітник</th><th>Товари</th><th>Послуги</th><th>Сума</th></tr></thead>
+    <tbody>
+    @foreach (var (ord, cust, emp, prods, services) in Model.OrdersInfo)
+    {
+        <tr>
+            <td>@ord.OrderDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
+            <td>@cust.FullName</td>
+            <td>@emp.FullName</td>
+            <td>
+                @foreach (var p in prods) { <div>@p.Name</div> }
+            </td>
+            <td>
+                @foreach (var s in services) { <div>@s.Name</div> }
+            </td>
+            <td>@ord.TotalCost.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td>
+        </tr>
+    }
+    </tbody>
+</table>

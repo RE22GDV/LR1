@@ -1,0 +1,40 @@
+﻿@page "{id:int}"
+@model WebUI.Pages.Products.DetailsModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Деталі товару";
+}
+
+<h2>Деталі товару</h2>
+
+@if (Model.Item is not null)
+{
+    <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9">@Model.Item.Id</dd>
+
+        <dt class="col-sm-3">Назва</dt>
+        <dd class="col-sm-9">@Model.Item.Name</dd>
+
+        <dt class="col-sm-3">Фірма</dt>
+        <dd class="col-sm-9">@Model.Item.Brand</dd>
+
+        <dt class="col-sm-3">Країна</dt>
+        <dd class="col-sm-9">@Model.Item.Country</dd>
+
+        <dt class="col-sm-3">Ціна</dt>
+        <dd class="col-sm-9">@Model.Item.Price.ToString("C", new CultureInfo("uk-UA"))</dd>
+
+
+        <dt class="col-sm-3">Гарантія</dt>
+        <dd class="col-sm-9">@Model.Item.WarrantyMonths міс.</dd>
+
+        <dt class="col-sm-3">Опис</dt>
+        <dd class="col-sm-9">@Model.Item.Description</dd>
+    </dl>
+}
+else
+{
+    <div class="alert alert-danger">Товар не знайдено.</div>
+}
