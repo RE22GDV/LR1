@@ -25,6 +25,7 @@
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/WebUI.MvcApplicationPartsAssemblyInfo.cache
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/WebUI.RazorAssemblyInfo.cache
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/WebUI.RazorAssemblyInfo.cs
+/Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/WebUI.sourcelink.json
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/scopedcss/Pages/Shared/_Layout.cshtml.rz.scp.css
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/scopedcss/bundle/WebUI.styles.css
 /Users/dmitrogandzuk/Documents/WebApps/Test/WebUI/obj/Debug/net9.0/scopedcss/projectbundle/WebUI.bundle.scp.css
