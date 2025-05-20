@@ -1,15 +1,12 @@
-/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/bin/Debug/net9.0/MyApp
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/bin/Debug/net9.0/MyApp.deps.json
-/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/bin/Debug/net9.0/MyApp.runtimeconfig.json
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/bin/Debug/net9.0/MyApp.dll
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/bin/Debug/net9.0/MyApp.pdb
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.GeneratedMSBuildEditorConfig.editorconfig
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.AssemblyInfoInputs.cache
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.AssemblyInfo.cs
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.csproj.CoreCompileInputs.cache
+/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.sourcelink.json
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.dll
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/refint/MyApp.dll
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.pdb
-/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.genruntimeconfig.cache
 /Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/ref/MyApp.dll
-/Users/dmitrogandzuk/Documents/WebApps/Test/MyApp/obj/Debug/net9.0/MyApp.sourcelink.json
