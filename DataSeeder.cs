@@ -3,7 +3,7 @@ namespace MyApp;
 
 public static class DataSeeder
 {
-    public static void Seed(WarehouseSystem db)
+    public static void Seed(WarehouseDbContext db)
     {
         // ===== Посади (5) =====
         db.Positions.AddRange(new[]
