@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyApp;
 
-namespace WebUI.Pages.Products;
+namespace WebUI.Pages.Employees;
 
 public class IndexModel : PageModel
 {
-    public List<Product> Data { get; private set; } = [];
+    private readonly WarehouseDbContext _db;
+
+    public IndexModel(WarehouseDbContext db)
+    {
+        _db = db;
+    }
+
+    public List<Employee> Data { get; private set; } = [];
 
     public void OnGet()
     {
-        Data = DemoDb.Db.Products;
+        Data = _db.Employees.ToList();
     }
 }

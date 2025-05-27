@@ -1,13 +1,19 @@
-// Pages/Queries/Index.cshtml.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MyApp;
-using System.Linq;
 
 namespace WebUI.Pages.Queries;
 
 public class IndexModel : PageModel
 {
+    private readonly WarehouseDbContext _db;
+
+    public IndexModel(WarehouseDbContext db)
+    {
+        _db = db;
+    }
+
     [BindProperty(SupportsGet = true)] public int? PositionId { get; set; }
     [BindProperty(SupportsGet = true)] public int? ProductTypeId { get; set; }
     [BindProperty(SupportsGet = true)] public int? CustomerId { get; set; }
@@ -18,45 +24,69 @@ public class IndexModel : PageModel
     public List<ProductType> ProductTypes { get; private set; } = [];
     public List<Customer> Customers { get; private set; } = [];
 
-    public List<(Employee Emp, Position Pos)> HRDepartment { get; private set; } = [];
-    public List<(Product Prod, ProductType Type)> ProductList { get; private set; } = [];
-    public List<(Order Ord, Customer Cust, Employee Emp, List<Product> Prods, List<Service> Services)> OrdersInfo { get; private set; } = [];
+    public List<HrRow> HRDepartment { get; private set; } = [];
+    public List<ProductRow> ProductList { get; private set; } = [];
+    public List<OrderRow> OrdersInfo { get; private set; } = [];
 
     public void OnGet()
     {
-        var db = DemoDb.Db;
+        Positions = _db.Positions.ToList();
+        ProductTypes = _db.ProductTypes.ToList();
+        Customers = _db.Customers.ToList();
 
-        Positions = db.Positions;
-        ProductTypes = db.ProductTypes;
-        Customers = db.Customers;
-
-        // Відділ кадрів із фільтром за посадою
-        HRDepartment = (from e in db.Employees
-                        join p in db.Positions on e.PositionId equals p.Id
+        // DTO для Відділу кадрів
+        HRDepartment = (from e in _db.Employees
+                        join p in _db.Positions on e.PositionId equals p.Id
                         where PositionId == null || e.PositionId == PositionId
-                        select (e, p)).ToList();
+                        select new HrRow(
+                            e.Id,
+                            e.FullName,
+                            p.Title,
+                            p.Salary
+                        )).ToList();
 
-        // Список товарів із фільтром за видом
-        ProductList = (from p in db.Products
-                       join t in db.ProductTypes on p.TypeId equals t.Id
+        // DTO для Товарів
+        ProductList = (from p in _db.Products
+                       join t in _db.ProductTypes on p.TypeId equals t.Id
                        where ProductTypeId == null || p.TypeId == ProductTypeId
-                       select (p, t)).ToList();
+                       select new ProductRow(
+                           p.Id,
+                           t.Name,
+                           p.Name,
+                           p.Price
+                       )).ToList();
 
-        // Список замовлень із фільтрами
-        OrdersInfo = db.Orders
+        // DTO для Замовлень
+        OrdersInfo = _db.Orders
             .Where(o => (CustomerId == null || o.CustomerId == CustomerId)
                      && (From == null || o.OrderDate >= From)
                      && (To == null || o.OrderDate <= To))
-            .Select(o => (
-                o,
-                db.Customers.FirstOrDefault(c => c.Id == o.CustomerId)!,
-                db.Employees.FirstOrDefault(e => e.Id == o.EmployeeId)!,
-                new[] { o.ProductId1, o.ProductId2, o.ProductId3 }
+            .AsEnumerable() // переключаємося на LINQ-to-Objects
+            .Select(o =>
+            {
+                var customerName = _db.Customers.First(c => c.Id == o.CustomerId).FullName;
+                var employeeName = _db.Employees.First(e => e.Id == o.EmployeeId).FullName;
+
+                var productNames = new[] { o.ProductId1, o.ProductId2, o.ProductId3 }
                     .Where(id => id > 0)
-                    .Select(id => db.Products.First(p => p.Id == id)).ToList(),
-                new[] { o.ServiceId1, o.ServiceId2, o.ServiceId3 }
+                    .Select(id => _db.Products.First(p => p.Id == id).Name)
+                    .ToList();
+
+                var serviceNames = new[] { o.ServiceId1, o.ServiceId2, o.ServiceId3 }
                     .Where(id => id > 0)
-                    .Select(id => db.Services.First(s => s.Id == id)).ToList()
-            )).ToList();
+                    .Select(id => _db.Services.First(s => s.Id == id).Name)
+                    .ToList();
+
+                return new OrderRow(
+                    o.Id,
+                    o.OrderDate,
+                    customerName,
+                    employeeName,
+                    productNames,
+                    serviceNames,
+                    o.TotalCost,
+                    o.Completed
+                );
+            }).ToList();
     }
 }

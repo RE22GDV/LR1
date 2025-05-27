@@ -53,43 +53,49 @@
 
 <h2>Відділ кадрів</h2>
 <table class="table table-bordered">
-    <thead><tr><th>ПІБ</th><th>Вік</th><th>Посада</th><th>Оклад</th></tr></thead>
+    <thead><tr><th>ID</th><th>ПІБ</th><th>Посада</th><th>Оклад</th></tr></thead>
     <tbody>
-    @foreach (var (e, p) in Model.HRDepartment)
+    @foreach (var row in Model.HRDepartment)
     {
-        <tr><td>@e.FullName</td><td>@e.Age</td><td>@p.Title</td><td>@p.Salary.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td></tr>
+        <tr>
+            <td>@row.Id</td>
+            <td>@row.FullName</td>
+            <td>@row.Title</td>
+            <td>@row.Salary.ToString("C", new CultureInfo("uk-UA"))</td>
+        </tr>
     }
     </tbody>
 </table>
 
 <h2>Список товарів</h2>
 <table class="table table-bordered">
-    <thead><tr><th>Назва</th><th>Тип</th><th>Ціна</th></tr></thead>
+    <thead><tr><th>ID</th><th>Назва</th><th>Тип</th><th>Ціна</th></tr></thead>
     <tbody>
-    @foreach (var (prod, type) in Model.ProductList)
+    @foreach (var row in Model.ProductList)
     {
-        <tr><td>@prod.Name</td><td>@type.Name</td><td>@prod.Price.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td></tr>
+        <tr>
+            <td>@row.Id</td>
+            <td>@row.Name</td>
+            <td>@row.Type</td>
+            <td>@row.Price.ToString("C", new CultureInfo("uk-UA"))</td>
+        </tr>
     }
     </tbody>
 </table>
 
 <h2>Список замовлень</h2>
 <table class="table table-bordered">
-    <thead><tr><th>Дата</th><th>Клієнт</th><th>Співробітник</th><th>Товари</th><th>Послуги</th><th>Сума</th></tr></thead>
+    <thead><tr><th>ID</th><th>Дата</th><th>Клієнт</th><th>Менеджер</th><th>Сума</th><th>Виконано</th></tr></thead>
     <tbody>
-    @foreach (var (ord, cust, emp, prods, services) in Model.OrdersInfo)
+    @foreach (var row in Model.OrdersInfo)
     {
         <tr>
-            <td>@ord.OrderDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
-            <td>@cust.FullName</td>
-            <td>@emp.FullName</td>
-            <td>
-                @foreach (var p in prods) { <div>@p.Name</div> }
-            </td>
-            <td>
-                @foreach (var s in services) { <div>@s.Name</div> }
-            </td>
-            <td>@ord.TotalCost.ToString("C", new System.Globalization.CultureInfo("uk-UA"))</td>
+            <td>@row.Id</td>
+            <td>@row.OrderDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</td>
+            <td>@row.Customer</td>
+            <td>@row.Manager</td>
+            <td>@row.TotalCost.ToString("C", new CultureInfo("uk-UA"))</td>
+            <td>@(row.Completed ? "Так" : "Ні")</td>
         </tr>
     }
     </tbody>

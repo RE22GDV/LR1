@@ -6,11 +6,18 @@ namespace WebUI.Pages.Products;
 
 public class DetailsModel : PageModel
 {
+    private readonly WarehouseDbContext _db;
+
+    public DetailsModel(WarehouseDbContext db)
+    {
+        _db = db;
+    }
+
     public Product? Item { get; private set; }
 
     public IActionResult OnGet(int id)
     {
-        Item = DemoDb.Db.Products.FirstOrDefault(p => p.Id == id);
+        Item = _db.Products.FirstOrDefault(p => p.Id == id);
         return Item is null ? NotFound() : Page();
     }
 }

@@ -1,12 +1,19 @@
-// Pages/Index.cshtml.cs
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyApp;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebUI.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly WarehouseDbContext _db;
+
+    public IndexModel(WarehouseDbContext db)
+    {
+        _db = db;
+    }
+
     public int EmpCount         { get; private set; }
     public int ProductCount     { get; private set; }
     public int OrderCount       { get; private set; }
@@ -15,23 +22,25 @@ public class IndexModel : PageModel
     public int CustomerCount    { get; private set; }
     public int ServiceCount     { get; private set; }
 
-    // Запит "Відділ кадрів": поєднує співробітників і їхні посади
-    public List<(Employee Emp, Position Pos)> HRDepartment { get; private set; } = [];
+    public List<HrRow> HRDepartment { get; private set; } = [];
 
     public void OnGet()
     {
-        var db = DemoDb.Db;
+        EmpCount         = _db.Employees.Count();
+        ProductCount     = _db.Products.Count();
+        OrderCount       = _db.Orders.Count();
+        PositionCount    = _db.Positions.Count();
+        ProductTypeCount = _db.ProductTypes.Count();
+        CustomerCount    = _db.Customers.Count();
+        ServiceCount     = _db.Services.Count();
 
-        EmpCount         = db.Employees.Count;
-        ProductCount     = db.Products.Count;
-        OrderCount       = db.Orders.Count;
-        PositionCount    = db.Positions.Count;
-        ProductTypeCount = db.ProductTypes.Count;
-        CustomerCount    = db.Customers.Count;
-        ServiceCount     = db.Services.Count;
-
-        HRDepartment = (from e in db.Employees
-                        join p in db.Positions on e.PositionId equals p.Id
-                        select (e, p)).ToList();
+        HRDepartment = (from e in _db.Employees
+                        join p in _db.Positions on e.PositionId equals p.Id
+                        select new HrRow(
+                            e.Id,
+                            e.FullName,
+                            p.Title,
+                            p.Salary
+                        )).ToList();
     }
 }
